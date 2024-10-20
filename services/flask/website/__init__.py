@@ -12,7 +12,12 @@ import os
 
 # Load environment variables from .env file
 basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(os.path.join(basedir, '.env'))
+# Debug to check if the .env file is being loaded correctly.
+if load_dotenv(os.path.join(basedir, '.env')):
+    print("Environment variables loaded from .env")
+else:
+    print("Failed to load .env file")
+
 
 bootstrap = Bootstrap5()
 db = SQLAlchemy()
@@ -23,8 +28,8 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', False)
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', False)
 
     # Handle setting the default theme if one is not in session.
     @app.before_request
@@ -35,9 +40,9 @@ def create_app():
             app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'zephyr'  # Default Theme
 
     # Initialize the SQLAlchemy connection
-    # db.init_app(app)
+    db.init_app(app)
     # Initialize database migrations
-    # migrate.init_app(app, db)
+    migrate.init_app(app, db)
     # Initialize the bootstrap frontend
     bootstrap.init_app(app)
 

@@ -1,7 +1,7 @@
 services:
   web:
     build: ./services/flask
-    restart: unless-stopped
+#    restart: unless-stopped
     command: gunicorn --bind 0.0.0.0:5000 -w 4 --log-level=debug run:app
     # To run it locally without nginx, use this command instead
     # command: flask --app flask_site run --host 0.0.0.0
