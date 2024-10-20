@@ -1,10 +1,82 @@
 <!DOCTYPE html>
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{%  from 'bootstrap5/utils.html' import render_messages, render_static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}Title{% endblock %}</title>
+
+    {% block head %}
+
+        {{ bootstrap.load_css() }}
+        {{ render_static('css', 'styles.css') }}
+        {{ render_static('icon', 'favicon.ico') }}
+
+        <style>{% block styles %}{% endblock %}</style>
+
+    {% endblock %}
 </head>
 <body>
-Hello World
+    <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('views.home') }}">Template</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    {{ render_nav_item('views.site_map', 'Site Map') }}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {{ render_messages(default_category='secondary', dismissible=True, dismiss_animate=True) }}
+
+    {% block content %}{% endblock %}
+
+    {% block scripts %}
+        {{ bootstrap.load_js() }}
+    {% endblock %}
+
+    <!-- Include this code in your template where you want the dropdown button -->
+    <div class="position-fixed bottom-0 end-0 m-3" style="z-index: 1050;">
+        <!-- Dropdown button -->
+        <div class="dropup">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <span>{{ session.theme if session.theme else 'Choose Theme' }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-custom" aria-labelledby="themeDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='cerulean') }}">cerulean</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='cosmo') }}">cosmo</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='cyborg') }}">cyborg</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='darkly') }}">darkly</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='flatly') }}">flatly</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='journal') }}">journal</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='litera') }}">litera</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='lumen') }}">lumen</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='lux') }}">lux</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='materia') }}">materia</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='minty') }}">minty</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='pulse') }}">pulse</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='sandstone') }}">sandstone</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='simplex') }}">simplex</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='sketchy') }}">sketchy</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='slate') }}">slate</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='solar') }}">solar</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='spacelab') }}">spacelab</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='superhero') }}">superhero</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='united') }}">united</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='yeti') }}">yeti</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='morph') }}">morph</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='quartz') }}">quartz</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='vapor') }}">vapor</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('views.switch_theme', theme='zephyr') }}">zephyr</a></li>
+            </ul>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,16 @@
+/*
+@author : Zuice
+@date : 2042-10-20
+*/
+
+/* For the themes list, so that it doesn't extend past the top of the window.*/
+.dropdown-custom {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* For the Title of the site, used to link to the home page on the navbar. */
+.nav-item-title {
+    font-size: 48px;
+}
+
