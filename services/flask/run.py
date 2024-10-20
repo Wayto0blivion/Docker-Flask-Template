@@ -1,3 +1,8 @@
+"""
+@author : Zuice
+@date : 2024-10-19
+"""
+
 from website import create_app
 
 app = create_app()

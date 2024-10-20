@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN pip install --upgrade pip
 COPY requirements.txt .
-RUN pip installl --no-cache -r requirements.txt
+RUN pip install --no-cache -r requirements.txt
 
 COPY . /app
 
