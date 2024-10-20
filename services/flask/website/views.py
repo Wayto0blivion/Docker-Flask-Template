@@ -16,7 +16,7 @@ def home():
     :return: HTML Template: Home page.
     """
     # flash('Returned Home!', '')
-    return render_template("_base.html")
+    return render_template("home.html")
 
 
 @views.route('/switch-theme/<theme>')
