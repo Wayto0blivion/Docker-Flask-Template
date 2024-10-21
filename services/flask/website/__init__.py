@@ -5,6 +5,7 @@
 from dotenv import load_dotenv
 from flask import Flask, session
 from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -45,11 +46,20 @@ def create_app():
     migrate.init_app(app, db)
     # Initialize the bootstrap frontend
     bootstrap.init_app(app)
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
 
     from .views import views
     app.register_blueprint(views, url_prefix='/')
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')
+
+    from .models import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     return app
 
