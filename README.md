@@ -11,3 +11,5 @@ docker-compose down -v
 -v removes any non-persistent containers to free up disk space.
 
 Flask-Migrate will automatically update the database to match the models included in models.py whenever it is launched.
+
+

@@ -4,6 +4,7 @@
 """
 
 from flask import Blueprint, current_app, redirect, render_template, request, session, url_for
+from flask_login import login_required
 
 
 views = Blueprint('views', __name__)
@@ -36,6 +37,10 @@ def switch_theme(theme):
 
 @views.route('/site-map', methods=['GET'])
 def site_map():
+    """
+    HTML page that contains a table with all links that don't require parameters.
+    :return:
+    """
     links = []
     for rule in current_app.url_map.iter_rules():
         # Exclude certain routes if necessary, like static files
@@ -48,7 +53,14 @@ def site_map():
     return render_template('sitemap.html', links=links)
 
 
-
+@views.route('/profile')
+@login_required
+def profile():
+    """
+    Display the user's profile information.
+    :return:
+    """
+    return render_template('profile.html')
 
 
 

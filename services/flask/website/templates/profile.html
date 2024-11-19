@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <div class="d-flex justify-content-center">
+            <h1>Hello {{ current_user.name }}</h1>
+        </div>
+    </div>
+{% endblock %}
+
+

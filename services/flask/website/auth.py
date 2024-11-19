@@ -14,7 +14,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
 
@@ -34,8 +34,8 @@ def login():
     return render_template('login.html', title="Login", form=form)
 
 
-@auth.route('/signup')
-@login_required
+@auth.route('/signup', methods=['GET', 'POST'])
+# @login_required
 def signup():
     form = RegistrationForm()
 
@@ -54,7 +54,8 @@ def signup():
             return redirect(url_for('auth.signup'))
 
         # Otherwise, create a new user, and hash the password.
-        new_user = User(email=email, username=username, name=form.name.data, password=generate_password_hash(form.password.data, method='sha256'))
+        new_user = User(email=email, username=username, name=form.name.data,
+                        password=generate_password_hash(form.password.data, method='pbkdf2:sha256'))
 
         # Add the user to the database.
         db.session.add(new_user)
@@ -66,8 +67,14 @@ def signup():
 
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return 'Logout'
+    """
+    Logs the user out and returns them to the home page.
+    :return:
+    """
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 
 
