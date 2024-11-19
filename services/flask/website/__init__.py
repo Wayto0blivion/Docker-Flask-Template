@@ -61,6 +61,21 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    # Create a default user if one does not exist
+    with app.app_context():
+        default_user = User.query.filter_by(email=os.getenv('DEFAULT_USER_EMAIL')).first()
+        if not default_user:
+            from werkzeug.security import generate_password_hash
+            new_user =  User(
+                email=os.getenv('DEFAULT_USER_EMAIL'),
+                username=os.getenv('DEFAULT_USER_USERNAME'),
+                name=os.getenv('DEFAULT_USER_NAME'),
+                password=generate_password_hash(os.getenv('DEFAULT_USER_PASSWORD'), method='pbkdf2:sha256'),
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            print('Default user created.')
+
     return app
 
 
