@@ -17,7 +17,7 @@ def home():
     :return: HTML Template: Home page.
     """
     # flash('Returned Home!', '')
-    return render_template("home.html")
+    return render_template("home.html", title='Home')
 
 
 @views.route('/switch-theme/<theme>')
@@ -50,5 +50,5 @@ def site_map():
             links.append({'url': url, 'endpoint': endpoint})
             # Sort links
             links.sort(key=lambda x: x['url'])
-    return render_template('sitemap.html', links=links)
+    return render_template('sitemap.html', title='Site-Map', links=links)
 
