@@ -6,7 +6,7 @@
 from . import db
 from .models import User
 from .forms import LoginForm, RegistrationForm
-from flask import Blueprint, flash, redirect, render_template, session, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, session, url_for
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -74,7 +74,10 @@ def logout():
     :return:
     """
     logout_user()
-    session.pop('remember_token')
+    # Get a reference to the current theme so that it isn't reset.
+    session_theme = session.get('theme')
+    session.clear()
+    session['theme'] = session_theme
     return redirect(url_for('auth.login'))
 
 
