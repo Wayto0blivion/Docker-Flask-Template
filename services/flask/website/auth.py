@@ -5,9 +5,9 @@
 
 from . import db
 from .models import User
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, UserProfileForm
 from flask import Blueprint, flash, jsonify, redirect, render_template, session, url_for
-from flask_login import login_user, login_required, logout_user
+from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -81,9 +81,28 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
+@auth.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    """
+    Handles user account and profile information. Mostly for allowing user to change password.
+    :return:
+    """
+    form = UserProfileForm()
 
+    if form.validate_on_submit():
+        if check_password_hash(current_user.password, form.current_password.data):
+            user = User.query.filter_by(id=current_user.id).first()
+            user.password = generate_password_hash(form.current_password.data, method='pbkdf2:sha256')
+            db.session.commit()
+            session_theme = session.get('theme')
+            session.clear()
+            session['theme'] = session_theme
+            flash('Password Changed!', category='success')
+        else:
+            flash('Please check your details and try again.', category='danger')
 
-
+    return render_template('profile.html', title="Profile", form=form)
 
 
 

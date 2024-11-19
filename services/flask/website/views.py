@@ -52,15 +52,3 @@ def site_map():
             links.sort(key=lambda x: x['url'])
     return render_template('sitemap.html', links=links)
 
-
-@views.route('/profile')
-@login_required
-def profile():
-    """
-    Display the user's profile information.
-    :return:
-    """
-    return render_template('profile.html')
-
-
-
