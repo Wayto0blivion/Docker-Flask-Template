@@ -95,10 +95,8 @@ def profile():
             user = User.query.filter_by(id=current_user.id).first()
             user.password = generate_password_hash(form.current_password.data, method='pbkdf2:sha256')
             db.session.commit()
-            session_theme = session.get('theme')
-            session.clear()
-            session['theme'] = session_theme
             flash('Password Changed!', category='success')
+            return redirect(url_for('auth.logout'))
         else:
             flash('Please check your details and try again.', category='danger')
 
