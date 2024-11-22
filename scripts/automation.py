@@ -2,7 +2,7 @@
 @author :   Zuicie
 @date   :   November 22, 2024
 
-Handles automated processed performed before git commit/push.
+Handles automated processed performed before git commit/push. Must be configured with IDE.
 Includes migrations and unit testing.
 """
 
@@ -37,7 +37,10 @@ def main():
     print("Running Database Migrations...")
     # Name of service from docker-compose.yml
     service_name = "web"
-    # Set the FLASK_APP environment variable if needed.
+    run_command(f"docker-compose exec {service_name} flask db migrate -m 'Auto-migration'")
+
+    print("Automation script has finished.")
 
 
-
+if __name__ == "__main__":
+    main()

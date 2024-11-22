@@ -1,0 +1,14 @@
+#!/bin/sh
+echo "Running pre-commit hook..."
+
+# Run the automation script
+python automation.py
+
+# If the script fails, prevent the commit
+if [ $? -ne 0 ]; then
+  echo "Pre-commit hook failed. Commit aborted."
+  exit 1
+fi
+
+echo "Pre-commit hook completed successfully."
+exit 0

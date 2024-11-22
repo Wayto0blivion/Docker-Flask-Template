@@ -5,8 +5,10 @@ services:
     command: gunicorn --bind 0.0.0.0:5000 -w 4 --log-level=debug run:app
     # To run it locally without nginx, use this command instead
     # command: flask --app flask_site run --host 0.0.0.0
-    expose:
-      - 5000
+    ports:
+      - "5000:5000"
+    # Mounts the flask directory so that it can replicate migrations to the development IDE, that way it can be pushed
+    # to GitHub.
     volumes:
       - ./services/flask:/app
     env_file:

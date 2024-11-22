@@ -18,3 +18,5 @@ Flask project files are in services/flask
 
 To run unit tests:
     From the terminal in the pycharm project, while in the venv, run "pytest". Make sure the docker containers are active.
+
+automation.py can be run manually to perform migrations and unit testing.
