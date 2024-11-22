@@ -16,4 +16,5 @@ Default login information for 'admin' account can be set in 'services/flask/.env
 
 Flask project files are in services/flask
 
-
+To run unit tests:
+    From the terminal in the pycharm project, while in the venv, run "pytest". Make sure the docker containers are active.
