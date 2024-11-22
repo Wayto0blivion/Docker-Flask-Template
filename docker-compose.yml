@@ -10,7 +10,7 @@ services:
     volumes:
       - ./services/flask:/app
     env_file:
-      - ./.env
+      - ./services/flask/website/.env
     depends_on:
       - db
 

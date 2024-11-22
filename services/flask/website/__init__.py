@@ -11,15 +11,6 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 
 
-# Load environment variables from .env file
-basedir = os.path.abspath(os.path.dirname(__file__))
-# Debug to check if the .env file is being loaded correctly.
-if load_dotenv(os.path.join(basedir, '.env')):
-    print("Environment variables loaded from .env")
-else:
-    print("Failed to load .env file")
-
-
 bootstrap = Bootstrap5()
 db = SQLAlchemy()
 migrate = Migrate()
