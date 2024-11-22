@@ -28,7 +28,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    {{ render_nav_item('views.site_map', 'Site Map') }}
+                    {% if not current_user.is_authenticated %}
+                        {{ render_nav_item('auth.login', 'Login') }}
+                    {% else %}
+                        {{ render_nav_item('views.site_map', 'Site Map') }}
+                        {{ render_nav_item('auth.logout', 'Logout') }}
+                    {% endif %}
                 </ul>
             </div>
         </div>

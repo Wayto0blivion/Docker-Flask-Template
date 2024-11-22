@@ -1,5 +1,5 @@
 FROM mysql:latest
-LABEL authors="Zuice"
+LABEL authors="Zuicie"
 
 WORKDIR /
 

@@ -1,5 +1,5 @@
 """
-@author : Zuice
+@author : Zuicie
 @date : 2024-10-19
 """
 
@@ -36,6 +36,7 @@ def switch_theme(theme):
 
 
 @views.route('/site-map', methods=['GET'])
+@login_required
 def site_map():
     """
     HTML page that contains a table with all links that don't require parameters.

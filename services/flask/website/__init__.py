@@ -1,5 +1,5 @@
 """
-@author Zuice
+@author Zuicie
 @date 2024-10-19
 """
 from dotenv import load_dotenv
@@ -25,8 +25,15 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 
-def create_app():
+def create_app(config_name=None):
     app = Flask(__name__)
+
+    # If running unit tests, load the testing configuration.
+    if config_name == 'testing':
+        app.config.from_object('config.TestingConfig')
+    else:
+        # Default configuration
+        app.config.from_object('config.Config')
 
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')

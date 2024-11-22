@@ -1,5 +1,5 @@
 FROM python:3.10.7-slim-buster
-LABEL authors="Zuice"
+LABEL authors="Zuicie"
 
 WORKDIR /app
 

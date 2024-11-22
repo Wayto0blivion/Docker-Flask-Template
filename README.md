@@ -13,3 +13,7 @@ docker-compose down -v
 Flask-Migrate will automatically update the database to match the models included in models.py whenever it is launched.
 
 Default login information for 'admin' account can be set in 'services/flask/.env'
+
+Flask project files are in services/flask
+
+
