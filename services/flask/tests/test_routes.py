@@ -90,5 +90,20 @@ def test_logout(client, new_user):
     assert b'Login' in response.data  # Adjust based on login page content
 
 
+def test_password_change(client, new_user):
+    """Test password change."""
+    # Log the user in.
+    client.post('/login', data={
+        'email': 'testuser@example.com',
+        'password': 'password123',
+    }, follow_redirects=True)
 
+    # Change the user's password
+    response = client.post('/profile', data={
+        'current_password': 'password123',
+        'new_password': 'test_py',
+        'new_password_verify': 'test_py',
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    assert b'Login' in response.data
 
