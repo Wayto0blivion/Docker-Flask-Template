@@ -30,6 +30,7 @@
                 <ul class="navbar-nav">
                     {% if not current_user.is_authenticated %}
                         {{ render_nav_item('auth.login', 'Login') }}
+                        {{ render_nav_item('auth.signup', 'Sign Up') }}
                     {% else %}
                         {{ render_nav_item('views.site_map', 'Site Map') }}
                         {{ render_nav_item('auth.logout', 'Logout') }}
