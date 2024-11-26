@@ -23,6 +23,9 @@ def create_app(config_name=None):
     if config_name == 'testing':
         from config import TestingConfig
         app.config.from_object(TestingConfig)
+    elif config_name == 'documentation':
+        from config import DocumentationConfig
+        app.config.from_object(DocumentationConfig)
     else:
         # Default configuration
         from config import Config

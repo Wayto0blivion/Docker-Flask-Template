@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Docker-Flask-Template Documentation &#8212; Docker-Flask-Template  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=2bf1fcf8" />
+    
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Docker-Flask-Template  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Docker-Flask-Template Documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="docker-flask-template-documentation">
+<h1>Docker-Flask-Template Documentation<a class="headerlink" href="#docker-flask-template-documentation" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="module-run">
+<span id="module-documentation"></span><h1>Module Documentation<a class="headerlink" href="#module-run" title="Link to this heading">¶</a></h1>
+<p>&#64;author : Zuicie
+&#64;date : 2024-10-19</p>
+<p>The entrypoint for starting the flask application. Ignores setting the app variable if Sphinx is building documentation.</p>
+<p id="module-website.views">&#64;author : Zuicie
+&#64;date : 2024-10-19</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="website.views.home">
+<span class="sig-prename descclassname"><span class="pre">website.views.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.views.home" title="Link to this definition">¶</a></dt>
+<dd><p>Simple landing page.
+:return: HTML Template: Home page.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.views.site_map">
+<span class="sig-prename descclassname"><span class="pre">website.views.</span></span><span class="sig-name descname"><span class="pre">site_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.views.site_map" title="Link to this definition">¶</a></dt>
+<dd><p>HTML page that contains a table with all links that don’t require parameters.
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.views.switch_theme">
+<span class="sig-prename descclassname"><span class="pre">website.views.</span></span><span class="sig-name descname"><span class="pre">switch_theme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theme</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#website.views.switch_theme" title="Link to this definition">¶</a></dt>
+<dd><p>Allows the user to switch between default Bootswatch Themes
+:param theme: String of theme to load.
+:return: Redirect to source or home</p>
+</dd></dl>
+
+<p id="module-website.auth">&#64;author : Zuicie
+&#64;date : 2024-10-20</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.login">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.login" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.logout">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.logout" title="Link to this definition">¶</a></dt>
+<dd><p>Logs the user out and returns them to the home page.
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.profile">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.profile" title="Link to this definition">¶</a></dt>
+<dd><p>Handles user account and profile information. Mostly for allowing user to change password.
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.signup">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.signup" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Docker-Flask-Template Documentation</a></li>
+<li><a class="reference internal" href="#module-run">Module Documentation</a><ul>
+<li><a class="reference internal" href="#website.views.home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
+<li><a class="reference internal" href="#website.views.site_map"><code class="docutils literal notranslate"><span class="pre">site_map()</span></code></a></li>
+<li><a class="reference internal" href="#website.views.switch_theme"><code class="docutils literal notranslate"><span class="pre">switch_theme()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.profile"><code class="docutils literal notranslate"><span class="pre">profile()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.signup"><code class="docutils literal notranslate"><span class="pre">signup()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Docker-Flask-Template  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Docker-Flask-Template Documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Zuicie.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>
