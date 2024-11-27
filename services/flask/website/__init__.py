@@ -5,6 +5,7 @@
 from dotenv import load_dotenv
 from flask import Flask, session
 from flask_bootstrap import Bootstrap5
+from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -30,11 +31,6 @@ def create_app(config_name=None):
         # Default configuration
         from config import Config
         app.config.from_object(Config)
-        # These env variables are set inside the 'if' loop so that the testing configuration is not
-        # overwritten when the tests are run.
-        app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS', False)
 
     # Handle setting the default theme if one is not in session.
     @app.before_request
@@ -50,15 +46,19 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     # Initialize the bootstrap frontend
     bootstrap.init_app(app)
+    # Initialize and setup the Login Manager.
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
+    toolbar = DebugToolbarExtension(app)  # Initialize the debug Toolbar.
 
+    # Register the blueprints
     from .views import views
     app.register_blueprint(views, url_prefix='/')
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')
 
+    # Setup the user loader so Flask-Login can track which user is authenticated.
     from .models import User
 
     @login_manager.user_loader
