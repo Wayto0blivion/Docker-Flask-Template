@@ -107,3 +107,11 @@ def test_password_change(client, new_user):
     assert response.status_code == 200
     assert b'Login' in response.data
 
+    # Log the user in using the new password.
+    login_response =     client.post('/login', data={
+        'email': 'testuser@example.com',
+        'password': 'test_py',
+    }, follow_redirects=True)
+    assert login_response.status_code == 200
+    assert b'Logout' in login_response.data
+
