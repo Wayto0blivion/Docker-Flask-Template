@@ -16,6 +16,10 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Allows the user to authenticate with unique credentials.
+    :return:
+    """
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -35,7 +39,7 @@ def login():
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
-# @login_required
+# @login_required  # Uncommenting this will allow only users that are already in the system to create new users.
 def signup():
     form = RegistrationForm()
 
@@ -71,7 +75,7 @@ def signup():
 def logout():
     """
     Logs the user out and returns them to the home page.
-    :return:
+    :return: Redirect to auth.login.
     """
     logout_user()
     # Get a reference to the current theme so that it isn't reset.
@@ -86,7 +90,7 @@ def logout():
 def profile():
     """
     Handles user account and profile information. Mostly for allowing user to change password.
-    :return:
+    :return: HTML template for profile page, profile.html
     """
     form = UserProfileForm()
 
