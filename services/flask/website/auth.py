@@ -6,7 +6,7 @@
 from . import db
 from .models import User
 from .forms import LoginForm, RegistrationForm, UserProfileForm
-from flask import Blueprint, flash, jsonify, redirect, render_template, session, url_for
+from flask import Blueprint, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -93,12 +93,17 @@ def profile():
     if form.validate_on_submit():
         if check_password_hash(current_user.password, form.current_password.data):
             user = User.query.filter_by(id=current_user.id).first()
-            user.password = generate_password_hash(form.current_password.data, method='pbkdf2:sha256')
+            user.password = generate_password_hash(form.new_password.data, method='pbkdf2:sha256')
             db.session.commit()
-            flash('Password Changed!', category='success')
             return redirect(url_for('auth.logout'))
         else:
-            flash('Please check your details and try again.', category='danger')
+            flash('The old password was incorrect!', category='danger')
+    else:
+        # Form was submitted but is not valid.
+        if form.is_submitted():  # Ensure the form was actually submitted.
+            for field, errors in form.errors.items():
+                for error in errors:
+                    print(f"Error in the {field} field: {error}")
 
     return render_template('profile.html', title="Profile", form=form)
 

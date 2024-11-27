@@ -35,7 +35,7 @@ class UserProfileForm(FlaskForm):
     """
     current_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[Length(min=7, message='Password is too short!')])
-    new_password_verify = PasswordField('New Password', validators=[InputRequired(),
+    new_password_verify = PasswordField('New Password (Verify)', validators=[InputRequired(),
                                                                     EqualTo('new_password',
                                                                             message='Password Mismatch!')])
     submit = SubmitField('Reset Password')
