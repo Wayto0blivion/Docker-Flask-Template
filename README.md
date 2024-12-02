@@ -40,4 +40,9 @@ services/flask/docs/conf.py
 More themes for Sphinx can be set in conf.py and can be found here:
 https://www.sphinx-doc.org/en/master/usage/theming.html
 
+CRLF line endings for Windows can cause problems with the Flask container not recognizing entrypoint.sh. This can be
+fixed by changing line endings to LF.
+
+
+
 
