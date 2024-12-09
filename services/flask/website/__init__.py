@@ -2,8 +2,11 @@
 @author Zuicie
 @date 2024-10-19
 """
+
 from dotenv import load_dotenv
 from flask import Flask, session
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from flask_bootstrap import Bootstrap5
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
@@ -59,7 +62,8 @@ def create_app(config_name=None):
     app.register_blueprint(auth, url_prefix='/')
 
     # Setup the user loader so Flask-Login can track which user is authenticated.
-    from .models import User
+    from .models import User, UserPermissions
+
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -81,6 +85,19 @@ def create_app(config_name=None):
                     db.session.add(new_user)
                     db.session.commit()
                     print('Default user created.')
+
+                    # Create the admin role if it does not exist as a permission.
+                    default_permission = UserPermissions.query.filter_by(name='Admin').first()
+                    if not default_permission:
+                        admin_permission = UserPermissions(name='Admin')
+                        db.session.add(admin_permission)
+                        db.session.commit()
+
+                    # Give the permission to the default user. Need to get a new reference to user.
+                    user = User.query.filter_by(email=os.getenv('DEFAULT_USER_EMAIL')).first()
+                    user.permissions.append(UserPermissions(name='Admin'))
+                    db.session.commit()
+
             except Exception as e:
                 import traceback
                 traceback.print_exc()

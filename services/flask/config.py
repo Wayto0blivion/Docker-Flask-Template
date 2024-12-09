@@ -17,6 +17,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Should be False in production
 
+    FLASK_ADMIN_SWATCH = os.getenv('FLASK_ADMIN_SWATCH')  # Set the theme for the admin panel.
+
     # Set debug options, generally related to Flask-DebugToolbar
     if os.getenv("FLASK_DEBUG", "0") == '1':  # Checks FLASK_DEBUG from .env and uses that as the value.
         DEBUG = True  # Sets the debug variable to True/False based on 0/1 value from .env
