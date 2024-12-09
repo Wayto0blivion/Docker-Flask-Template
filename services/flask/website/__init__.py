@@ -12,12 +12,9 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from .extensions import *
+from .models import *
 import os
-
-
-bootstrap = Bootstrap5()
-db = SQLAlchemy()
-migrate = Migrate()
 
 
 def create_app(config_name=None):
@@ -54,16 +51,20 @@ def create_app(config_name=None):
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
     toolbar = DebugToolbarExtension(app)  # Initialize the debug Toolbar.
+    # Add Flask-Admin
+    admin = Admin(app, name='Data', url='/data-admin', template_mode='bootstrap4')
+
+    # Handle Flask-Admin setup by adding all models automatically.
+    for mapper in db.Model._sa_registry.mappers:
+        model_class = mapper.class_
+        if hasattr(model_class, '__tablename__'):
+            admin.add_view(ModelView(model_class, db.session))
 
     # Register the blueprints
     from .views import views
     app.register_blueprint(views, url_prefix='/')
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')
-
-    # Setup the user loader so Flask-Login can track which user is authenticated.
-    from .models import User, UserPermissions
-
 
     @login_manager.user_loader
     def load_user(user_id):
