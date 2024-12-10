@@ -5,6 +5,7 @@
 
 from flask import Blueprint, current_app, redirect, render_template, request, session, url_for
 from flask_login import login_required
+import website.helper_functions as hf
 
 
 views = Blueprint('views', __name__)
@@ -37,6 +38,7 @@ def switch_theme(theme):
 
 @views.route('/site-map', methods=['GET'])
 @login_required
+# @hf.user_permissions('Admin')  # Example of how to use the user_permissions decorator.
 def site_map():
     """
     HTML page that contains a table with all links that don't require parameters.
