@@ -4,17 +4,29 @@
 """
 
 from dotenv import load_dotenv
-from flask import Flask, session
+from flask import Flask, redirect, session, url_for
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.menu import MenuLink
 from flask_bootstrap import Bootstrap5
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_login import LoginManager
+from flask_login import current_user, LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from .extensions import *
 from .models import *
 import os
+
+
+class AdminPermissionModelView(ModelView):
+    """
+    Create a custom ModelView that limits access to users with the "Admin" role.
+    """
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.has_permission('Admin')
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('views.home'))
 
 
 def create_app(config_name=None):
@@ -58,7 +70,10 @@ def create_app(config_name=None):
     for mapper in db.Model._sa_registry.mappers:
         model_class = mapper.class_
         if hasattr(model_class, '__tablename__'):
-            admin.add_view(ModelView(model_class, db.session))
+            admin.add_view(AdminPermissionModelView(model_class, db.session))
+
+    # Add a back button so that the homepage can be returned to from the Flask-Admin page.
+    admin.add_link(MenuLink(name='Back', url='/'))
 
     # Register the blueprints
     from .views import views
@@ -88,16 +103,19 @@ def create_app(config_name=None):
                     print('Default user created.')
 
                     # Create the admin role if it does not exist as a permission.
+                    # Ensure the admin permission exists
                     default_permission = UserPermissions.query.filter_by(name='Admin').first()
                     if not default_permission:
                         admin_permission = UserPermissions(name='Admin')
                         db.session.add(admin_permission)
                         db.session.commit()
+                        default_permission = UserPermissions.query.filter_by(name='Admin').first()
 
-                    # Give the permission to the default user. Need to get a new reference to user.
+                    # Assign the existing admin permission to the user, not create a new one
                     user = User.query.filter_by(email=os.getenv('DEFAULT_USER_EMAIL')).first()
-                    user.permissions.append(UserPermissions(name='Admin'))
+                    user.permissions.append(default_permission)
                     db.session.commit()
+
 
             except Exception as e:
                 import traceback
