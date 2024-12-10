@@ -35,6 +35,7 @@
                         {{ render_nav_item('auth.profile', 'Profile') }}
                         {% if current_user.has_permission('Admin') %}
                             {{ render_nav_item('views.site_map', 'Site Map') }}
+                            {{ render_nav_item('views.docs', 'Documentation') }}
                             {{ render_nav_item('admin.index', 'Admin') }}
                         {% endif %}
                         {{ render_nav_item('auth.logout', 'Logout') }}
