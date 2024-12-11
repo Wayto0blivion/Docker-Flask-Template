@@ -36,7 +36,9 @@
                         {% if current_user.has_permission('Admin') %}
                             {{ render_nav_item('views.site_map', 'Site Map') }}
                             {{ render_nav_item('views.docs', 'Documentation') }}
-                            {{ render_nav_item('admin.index', 'Admin') }}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/phpmyadmin/">Admin</a>
+                            </li>
                         {% endif %}
                         {{ render_nav_item('auth.logout', 'Logout') }}
                     {% endif %}

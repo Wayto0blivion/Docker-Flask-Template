@@ -3,11 +3,8 @@
 @date 2024-10-19
 """
 
-from dotenv import load_dotenv
+
 from flask import Flask, redirect, session, url_for
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from flask_admin.menu import MenuLink
 from flask_bootstrap import Bootstrap5
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import current_user, LoginManager
@@ -16,32 +13,6 @@ from flask_sqlalchemy import SQLAlchemy
 from .extensions import *
 from .models import *
 import os
-
-
-class AdminPermissionModelView(ModelView):
-    """
-    Custom ModelView that dynamically handles relationships and ensures permission checks.
-    """
-
-    def is_accessible(self):
-        return current_user.is_authenticated and current_user.has_permission('Admin')
-
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('views.home'))
-
-    def __init__(self, model, session, **kwargs):
-        super().__init__(model, session, **kwargs)
-
-        # Dynamically configure relationship fields for many-to-many tables
-        if hasattr(model, '__mapper__'):
-            relationships = [
-                rel.key for rel in model.__mapper__.relationships
-                if rel.secondary is not None  # Many-to-Many relationships
-            ]
-            # Ensure form_columns is initialized properly
-            self.form_columns = (getattr(self, 'form_columns', []) or ['id']) + relationships
-            self.column_list = (getattr(self, 'column_list', []) or ['id']) + relationships
-
 
 
 def create_app(config_name=None):
@@ -78,32 +49,6 @@ def create_app(config_name=None):
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
     toolbar = DebugToolbarExtension(app)  # Initialize the debug Toolbar.
-    # Add Flask-Admin
-    admin = Admin(app, name='Data', url='/data-admin', template_mode='bootstrap4')
-
-    # Add all models to Flask-Admin dynamically
-    for mapper in db.Model._sa_registry.mappers:
-        model_class = mapper.class_
-        if hasattr(model_class, '__tablename__'):
-            admin.add_view(AdminPermissionModelView(model_class, db.session))
-
-    # Add all association tables (lookup tables) dynamically
-    mapped_table_names = [mapper.class_.__tablename__ for mapper in db.Model._sa_registry.mappers if
-                          hasattr(mapper.class_, '__tablename__')]
-
-    for table_name, table in db.metadata.tables.items():
-        if table_name not in mapped_table_names:
-            try:
-                # Dynamically create a model for the table
-                class LookupModel(db.Model):
-                    __table__ = table
-
-                admin.add_view(AdminPermissionModelView(LookupModel, db.session, name=f"{table_name.title()} Lookup"))
-            except Exception as e:
-                app.logger.warning(f"Could not add table {table_name} to admin: {e}")
-
-    # Add a back button so that the homepage can be returned to from the Flask-Admin page.
-    admin.add_link(MenuLink(name='Back', url='/'))
 
     # Register the blueprints
     from .views import views
