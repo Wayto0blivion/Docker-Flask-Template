@@ -36,15 +36,16 @@ services:
 
 # Only used for testing on a local device.
 # If you uncomment this block, you must also uncomment the corresponding section of default.conf for NGINX.
-#  phpmyadmin:
-#    image: phpmyadmin:latest
-#    restart: always
-#    environment:
-#      - PMA_HOST=db
-#      - PMA_ABSOLUTE_URI=http://192.168.3.83/phpmyadmin/  # Replace IP Address with your IP.
-#      - UPLOAD_LIMIT=256M
-#    depends_on:
-#      - db
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    environment:
+      - PMA_HOST=db
+      - UPLOAD_LIMIT=256M
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php  # This script automatically sets ABSOLUTE_URI
+    depends_on:
+      - db
 
 
 volumes:
