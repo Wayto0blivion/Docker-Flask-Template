@@ -48,7 +48,7 @@ def create_app(config_name=None):
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-    toolbar = DebugToolbarExtension(app)  # Initialize the debug Toolbar.
+    toolbar = RestrictToolbarExtension(app)  # Initialize the debug Toolbar.
 
     # Register the blueprints
     from .views import views
@@ -100,6 +100,12 @@ def create_app(config_name=None):
     return app
 
 
+class RestrictToolbarExtension(DebugToolbarExtension):
+    """
+    Restricts usage of Flask-DebugToolbar to users with Admin privileges.
+    """
+    def _show_toolbar(self):
+        return current_user.is_authenticated and current_user.has_permission('Admin') and super()._show_toolbar()
 
 
 
