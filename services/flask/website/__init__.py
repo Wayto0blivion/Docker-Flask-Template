@@ -79,12 +79,12 @@ def create_app(config_name=None):
 
                     # Create the admin role if it does not exist as a permission.
                     # Ensure the admin permission exists
-                    default_permission = UserPermissions.query.filter_by(name='Admin').first()
+                    default_permission = Permissions.query.filter_by(name='Admin').first()
                     if not default_permission:
-                        admin_permission = UserPermissions(name='Admin')
+                        admin_permission = Permissions(name='Admin')
                         db.session.add(admin_permission)
                         db.session.commit()
-                        default_permission = UserPermissions.query.filter_by(name='Admin').first()
+                        default_permission = Permissions.query.filter_by(name='Admin').first()
 
                     # Assign the existing admin permission to the user, not create a new one
                     user = User.query.filter_by(email=os.getenv('DEFAULT_USER_EMAIL')).first()

@@ -47,7 +47,8 @@ To add a data-table to an html page, pass the query to it similar to below:
 ```python
 def show_users():
     """
-    Shows a list of all users in the system, loaded into a dynamically generated table through data_loader.js.
+    Shows a list of all users in the system, loaded into a 
+    dynamically generated table through data_loader.js.
     Returns:
         Table with all users.
     """

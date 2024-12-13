@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(256), nullable=False)
     # Establish a many-to-many relationship to UserPermissions via the association table user_permission.
-    permissions = db.relationship("UserPermissions", secondary='user_permission', backref='users')
+    permissions = db.relationship("Permissions", secondary='user_permission', backref='users')
 
     def has_permission(self, permission_name):
         """
@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
         return any (p.name == permission_name for p in self.permissions)
 
 
-class UserPermissions(db.Model):
+class Permissions(db.Model):
     """
     Stores user permissions such as admin, DebugToolbar, etc.
     Can be extended for any granular permissions.
@@ -39,13 +39,14 @@ class UserPermissions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
 
+class UserPermissions(db.Model):
+    """
+    Association model for many-to-many user permissions.
+    """
+    __tablename__ = 'user_permission'
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    permission_id = db.Column(db.Integer, db.ForeignKey('permissions.id'), primary_key=True)
 
-# Association table for many-to-many user permissions. Purely a lookup table, doesn't require its own model class.
-user_permission = db.Table(
-    'user_permission',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-    db.Column('permission_id', db.Integer, db.ForeignKey('permissions.id'), primary_key=True),
-)
 
 class QueryConfiguration(db.Model):
     """
@@ -57,7 +58,7 @@ class QueryConfiguration(db.Model):
     filters = db.Column(JSON, nullable=True)
     columns = db.Column(JSON, nullable=True)
     created_at = db.Column(db.DateTime, server_default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 
 def build_model_registry():
