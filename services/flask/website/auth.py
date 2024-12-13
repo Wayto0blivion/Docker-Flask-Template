@@ -4,11 +4,13 @@
 """
 
 from . import db
-from .models import User
+from .helper_functions import user_permissions
+from .models import User, QueryConfiguration
 from .forms import LoginForm, RegistrationForm, UserProfileForm
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import uuid
 
 
 auth = Blueprint('auth', __name__)
@@ -114,6 +116,29 @@ def profile():
                     print(f"Error in the {field} field: {error}")
 
     return render_template('profile.html', title="Profile", form=form)
+
+
+@auth.route('/show-users', methods=['GET', 'POST'])
+@login_required
+@user_permissions("Admin")
+def show_users():
+    """
+    Shows a list of all users in the system, loaded into a dynamically generated table through data_loader.js.
+    Returns:
+        Table with all users.
+    """
+    query_id = str(uuid.uuid4())  # Generate a unique id for each query.
+    config = QueryConfiguration(
+        id=query_id,
+        model_name='user',  # The __tablename__ of the model to user.
+        filters={},  # Not filtering the results, so an empty dictionary is passed.
+        columns=['id', 'email', 'name'],
+        user_id=current_user.id if current_user.is_authenticated else 0
+    )
+    db.session.add(config)
+    db.session.commit()
+
+    return render_template('home.html', title="Users", data_endpoint=f"/api/data?query_id={query_id}")
 
 
 

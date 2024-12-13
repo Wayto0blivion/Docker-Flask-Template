@@ -44,7 +44,7 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     # Initialize the bootstrap frontend
     bootstrap.init_app(app)
-    # Initialize and setup the Login Manager.
+    # Initialize and set up the Login Manager.
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)

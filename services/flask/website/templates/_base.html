@@ -14,6 +14,7 @@
         {{ bootstrap.load_css() }}
         {{ render_static('css', 'styles.css') }}
         {{ render_static('icon', 'favicon.ico') }}
+        {{ render_static('js', 'data_loader.js') }}
 
         <style>{% block styles %}{% endblock %}</style>
 
@@ -51,8 +52,18 @@
 
     {% block content %}{% endblock %}
 
+
+    {% block table %}
+        {% if data_endpoint %}
+            <div id="data-container" data-endpoint="{{ data_endpoint }}"></div>
+        {% endif %}
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
     {% block scripts %}
         {{ bootstrap.load_js() }}
+{#        <script src="{{ url_for('static', filename='js/data_loader.js') }}"></script>#}
     {% endblock %}
 
     <!-- Include this code in your template where you want the dropdown button -->
