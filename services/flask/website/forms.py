@@ -40,3 +40,25 @@ class UserProfileForm(FlaskForm):
                                                                             message='Password Mismatch!')])
     submit = SubmitField('Reset Password')
 
+
+class ForgotPasswordForm(FlaskForm):
+    """
+    Allows the user to request a 'forgot password' email.
+    """
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Reset Password')
+
+
+class ResetPasswordForm(FlaskForm):
+    """
+    Allows a user to reset their own password.
+    """
+    new_password = PasswordField('New Password', validators=[Length(min=7, message='Password is too short!')])
+    confirm_password = PasswordField('New Password (Verify)', validators=[InputRequired(),
+                                                                    EqualTo('new_password',
+                                                                            message='Password Mismatch!')])
+    submit = SubmitField('Set New Password')
+
+
+
+
