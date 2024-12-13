@@ -43,6 +43,27 @@ https://www.sphinx-doc.org/en/master/usage/theming.html
 CRLF line endings for Windows can cause problems with the Flask container not recognizing entrypoint.sh. This can be
 fixed by changing line endings to LF.
 
+To add a data-table to an html page, pass the query to it similar to below:
+```python
+def show_users():
+    """
+    Shows a list of all users in the system, loaded into a dynamically generated table through data_loader.js.
+    Returns:
+        Table with all users.
+    """
+    query_id = str(uuid.uuid4())  # Generate a unique id for each query.
+    config = QueryConfiguration(
+        id=query_id,
+        model_name='user',  # The __tablename__ of the model to user.
+        filters={},  # Not filtering the results, so an empty dictionary is passed.
+        columns=['id', 'email', 'name'],
+        user_id=current_user.id if current_user.is_authenticated else 0
+    )
+    db.session.add(config)
+    db.session.commit()
 
+    return render_template('home.html', title="Users", data_endpoint=f"/api/data?query_id={query_id}")
+
+```
 
 
