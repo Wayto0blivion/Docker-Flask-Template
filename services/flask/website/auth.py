@@ -148,7 +148,7 @@ def reset_password(token):
 
     form = ResetPasswordForm()
     if form.validate_on_submit():
-        user = User.query.get(user_id)
+        user = db.session.get(User, user_id)
         if user:
             user.password = generate_password_hash(form.new_password.data, method='pbkdf2:sha256')
             db.session.commit()

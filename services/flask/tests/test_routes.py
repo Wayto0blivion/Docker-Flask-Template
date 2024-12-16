@@ -4,6 +4,7 @@
 Actual test functions for pytest.
 """
 
+from itsdangerous import URLSafeTimedSerializer
 import pytest
 from website.models import User
 from werkzeug.security import generate_password_hash
@@ -114,4 +115,86 @@ def test_password_change(client, new_user):
     }, follow_redirects=True)
     assert login_response.status_code == 200
     assert b'Logout' in login_response.data
+
+
+def test_forgot_password_get(client):
+    """Ensure GET /forgot-password renders the form."""
+    response = client.get('/forgot-password')
+    assert response.status_code == 200
+    assert b'Forgot Password' in response.data
+
+
+def test_forgot_password_post_exists(client, new_user, monkeypatch):
+    """Test POST /forgot-password with a valid user email."""
+    # Mock out mail.send to avoid sending a real email
+    def mock_send(self, msg):
+        print("[MOCK] Email sent to", msg.recipients)
+        assert new_user.email in msg.recipients
+
+    monkeypatch.setattr("flask_mail.Mail.send", mock_send)
+
+    response = client.post('/forgot-password', data={
+        'email': 'testuser@example.com',
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    # The route always flashes the same message, so check for that
+    assert b'If that email is in our system' in response.data
+
+
+def test_forgot_password_post_doesnt_exist(client, monkeypatch):
+    """Test POST /forgot-password with a non-existent user email."""
+    def mock_send(self, msg):
+        pytest.fail('mail.send should not be called for non-existent user')
+
+    monkeypatch.setattr("flask_mail.Mail.send", mock_send)
+
+    response = client.post('/forgot-password', data={
+        'email': 'notreal@example.com',
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    # The same generic message is shown
+    assert b'If that email is in our system' in response.data
+
+
+def test_reset_password_get_valid_token(client, new_user, app):
+    """Test GET /reset-password/<token> with a valid token"""
+    with app.app_context():
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], salt="password-reset-salt")
+        token = s.dumps(new_user.id)  # Generate a valid token
+
+    response = client.get(f'/reset-password/{token}')
+    assert response.status_code == 200
+    assert b'Reset Password' in response.data
+
+
+def test_reset_password_post_valid_token(client, new_user, app):
+    """Test POST /reset-password/<token> to actually change the password."""
+    with app.app_context():
+        s = URLSafeTimedSerializer(app.config['SECRET_KEY'], salt="password-reset-salt")
+        token = s.dumps(new_user.id)
+
+    response = client.post(f'/reset-password/{token}', data={
+        'new_password': 'new_secret',
+        'confirm_password': 'new_secret'
+    }, follow_redirects=True)
+
+    # Verify user's password changed.
+    from website.models import User
+    updated_user = User.query.filter_by(id=new_user.id).first()
+    from werkzeug.security import check_password_hash
+    assert check_password_hash(updated_user.password, 'new_secret') is True
+
+
+def test_reset_password_invalid_token(client):
+    """Test GET /reset-password/<token> with invalid/expired token."""
+    invalid_token = "some.invalid.token"
+
+    response = client.get(f'/reset-password/{invalid_token}', follow_redirects=True)
+    assert response.status_code == 200
+    assert b'Your reset link is invalid' in response.data
+
+
+
+
+
 

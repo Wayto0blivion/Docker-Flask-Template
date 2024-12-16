@@ -60,7 +60,7 @@ def create_app(config_name=None):
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return db.session.query(User).get(int(user_id))
 
     # Create a default user if one does not exist, only if not testing
     if not app.config.get("TESTING", False) and not os.getenv('FLASK_MIGRATING'):

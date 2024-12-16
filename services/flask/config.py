@@ -22,7 +22,7 @@ class Config:
 
     # Set options for Flask-Mail
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
-    MAIL_PORT = int(os.getenv('MAIL_PORT'))
+    MAIL_PORT = int(os.getenv('MAIL_PORT', 465))
     MAIL_USE_TLS = True if os.getenv('MAIL_USE_TLS') == 'True' else False
     MAIL_USE_SSL = True if os.getenv('MAIL_USE_SSL') == 'True' else False
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
