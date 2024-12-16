@@ -1,3 +1,15 @@
+To initialize project, run:
+```
+scripts/setup.py
+```
+
+To handle tests, migrations, and starting containers, run:
+```
+scripts/automation.py
+```
+
+
+
 To start docker-compose containers:
 docker-compose up -d --build
 
@@ -67,4 +79,5 @@ def show_users():
 
 ```
 
+WILL NOT RUN WITHOUT .env BEING CONFIGURED
 

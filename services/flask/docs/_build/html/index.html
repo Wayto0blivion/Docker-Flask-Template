@@ -38,13 +38,24 @@
 <div class="toctree-wrapper compound">
 </div>
 </section>
+<section id="module-documentation">
+<h1>Module Documentation<a class="headerlink" href="#module-documentation" title="Link to this heading">¶</a></h1>
 <section id="module-run">
-<span id="module-documentation"></span><h1>Module Documentation<a class="headerlink" href="#module-run" title="Link to this heading">¶</a></h1>
+<span id="run"></span><h2>Run<a class="headerlink" href="#module-run" title="Link to this heading">¶</a></h2>
 <p>&#64;author : Zuicie
 &#64;date : 2024-10-19</p>
 <p>The entrypoint for starting the flask application. Ignores setting the app variable if Sphinx is building documentation.</p>
-<p id="module-website.views">&#64;author : Zuicie
+</section>
+<section id="module-website.views">
+<span id="website-views"></span><h2>Website Views<a class="headerlink" href="#module-website.views" title="Link to this heading">¶</a></h2>
+<p>&#64;author : Zuicie
 &#64;date : 2024-10-19</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="website.views.api_data">
+<span class="sig-prename descclassname"><span class="pre">website.views.</span></span><span class="sig-name descname"><span class="pre">api_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.views.api_data" title="Link to this definition">¶</a></dt>
+<dd><p>Returns JSON data for a given query_id. Used by the Fetch API (AJAX) call in data_loader.js.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="website.views.docs">
 <span class="sig-prename descclassname"><span class="pre">website.views.</span></span><span class="sig-name descname"><span class="pre">docs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.views.docs" title="Link to this definition">¶</a></dt>
@@ -104,8 +115,30 @@
 </dl>
 </dd></dl>
 
-<p id="module-website.auth">&#64;author : Zuicie
+</section>
+<section id="module-website.auth">
+<span id="auth-views"></span><h2>Auth Views<a class="headerlink" href="#module-website.auth" title="Link to this heading">¶</a></h2>
+<p>&#64;author : Zuicie
 &#64;date : 2024-10-20</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.forgot_password">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">forgot_password</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.forgot_password" title="Link to this definition">¶</a></dt>
+<dd><p>Returns:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.generate_reset_token">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">generate_reset_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expires_sec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1800</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.generate_reset_token" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a token that expires after 30 minutes (1800 seconds)
+:param user_id: The id of the user requesting a password reset.
+:param expires_sec: How long to allow the link to persist for.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Serialized token that has been salted for user reset functions.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="website.auth.login">
 <span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.login" title="Link to this definition">¶</a></dt>
@@ -127,11 +160,151 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="website.auth.reset_password">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">reset_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.reset_password" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong></p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.show_users">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">show_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.show_users" title="Link to this definition">¶</a></dt>
+<dd><p>Shows a list of all users in the system, loaded into a dynamically generated table through data_loader.js.
+:returns: Table with all users.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="website.auth.signup">
 <span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.signup" title="Link to this definition">¶</a></dt>
 <dd><p>Allows a new user to register with the application.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="website.auth.verify_reset_token">
+<span class="sig-prename descclassname"><span class="pre">website.auth.</span></span><span class="sig-name descname"><span class="pre">verify_reset_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_age</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1800</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#website.auth.verify_reset_token" title="Link to this definition">¶</a></dt>
+<dd><p>Verify token within 30 minutes (1800 seconds).
+:param token: The token to verify.
+:param max_age: The maximum age the token can be.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>user_id or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-tests.test_routes">
+<span id="test-routes"></span><h2>Test Routes<a class="headerlink" href="#module-tests.test_routes" title="Link to this heading">¶</a></h2>
+<p>&#64;author :   Zuicie
+&#64;date   :   November 19, 2024
+Actual test functions for pytest.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.new_user">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">new_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.new_user" title="Link to this definition">¶</a></dt>
+<dd><p>Create a new user for testing.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_api_data_no_config">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_api_data_no_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_api_data_no_config" title="Link to this definition">¶</a></dt>
+<dd><p>If query_config doesn’t exist for the given query_id</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_api_data_no_query_id">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_api_data_no_query_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_api_data_no_query_id" title="Link to this definition">¶</a></dt>
+<dd><p>Query /api/data with no query id. Should return an empty response.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_api_data_valid">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_api_data_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_api_data_valid" title="Link to this definition">¶</a></dt>
+<dd><p>Create a QueryConfiguration that returns the user, then fetch the query_id from api/data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_forgot_password_get">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_forgot_password_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_forgot_password_get" title="Link to this definition">¶</a></dt>
+<dd><p>Ensure GET /forgot-password renders the form.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_forgot_password_post_doesnt_exist">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_forgot_password_post_doesnt_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monkeypatch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_forgot_password_post_doesnt_exist" title="Link to this definition">¶</a></dt>
+<dd><p>Test POST /forgot-password with a non-existent user email.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_forgot_password_post_exists">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_forgot_password_post_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monkeypatch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_forgot_password_post_exists" title="Link to this definition">¶</a></dt>
+<dd><p>Test POST /forgot-password with a valid user email.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_home_page">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_home_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_home_page" title="Link to this definition">¶</a></dt>
+<dd><p>Test that the homepage is accessible.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_login">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_login" title="Link to this definition">¶</a></dt>
+<dd><p>Test user login.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_logout">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_logout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_logout" title="Link to this definition">¶</a></dt>
+<dd><p>Test user logout.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_password_change">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_password_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_password_change" title="Link to this definition">¶</a></dt>
+<dd><p>Test password change.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_profile_access">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_profile_access</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_profile_access" title="Link to this definition">¶</a></dt>
+<dd><p>Test accessing the profile page when logged in.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_profile_requires_login">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_profile_requires_login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_profile_requires_login" title="Link to this definition">¶</a></dt>
+<dd><p>Test that profile page redirects when not logged in.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_reset_password_get_valid_token">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_reset_password_get_valid_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_reset_password_get_valid_token" title="Link to this definition">¶</a></dt>
+<dd><p>Test GET /reset-password/&lt;token&gt; with a valid token</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_reset_password_invalid_token">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_reset_password_invalid_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_reset_password_invalid_token" title="Link to this definition">¶</a></dt>
+<dd><p>Test GET /reset-password/&lt;token&gt; with invalid/expired token.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_reset_password_post_valid_token">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_reset_password_post_valid_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_reset_password_post_valid_token" title="Link to this definition">¶</a></dt>
+<dd><p>Test POST /reset-password/&lt;token&gt; to actually change the password.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_routes.test_signup">
+<span class="sig-prename descclassname"><span class="pre">tests.test_routes.</span></span><span class="sig-name descname"><span class="pre">test_signup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_routes.test_signup" title="Link to this definition">¶</a></dt>
+<dd><p>Test user registration.</p>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -145,16 +318,49 @@
     <h3><a href="#">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Docker-Flask-Template Documentation</a></li>
-<li><a class="reference internal" href="#module-run">Module Documentation</a><ul>
+<li><a class="reference internal" href="#module-documentation">Module Documentation</a><ul>
+<li><a class="reference internal" href="#module-run">Run</a></li>
+<li><a class="reference internal" href="#module-website.views">Website Views</a><ul>
+<li><a class="reference internal" href="#website.views.api_data"><code class="docutils literal notranslate"><span class="pre">api_data()</span></code></a></li>
 <li><a class="reference internal" href="#website.views.docs"><code class="docutils literal notranslate"><span class="pre">docs()</span></code></a></li>
 <li><a class="reference internal" href="#website.views.home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
 <li><a class="reference internal" href="#website.views.serve_docs"><code class="docutils literal notranslate"><span class="pre">serve_docs()</span></code></a></li>
 <li><a class="reference internal" href="#website.views.site_map"><code class="docutils literal notranslate"><span class="pre">site_map()</span></code></a></li>
 <li><a class="reference internal" href="#website.views.switch_theme"><code class="docutils literal notranslate"><span class="pre">switch_theme()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-website.auth">Auth Views</a><ul>
+<li><a class="reference internal" href="#website.auth.forgot_password"><code class="docutils literal notranslate"><span class="pre">forgot_password()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.generate_reset_token"><code class="docutils literal notranslate"><span class="pre">generate_reset_token()</span></code></a></li>
 <li><a class="reference internal" href="#website.auth.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
 <li><a class="reference internal" href="#website.auth.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
 <li><a class="reference internal" href="#website.auth.profile"><code class="docutils literal notranslate"><span class="pre">profile()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.reset_password"><code class="docutils literal notranslate"><span class="pre">reset_password()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.show_users"><code class="docutils literal notranslate"><span class="pre">show_users()</span></code></a></li>
 <li><a class="reference internal" href="#website.auth.signup"><code class="docutils literal notranslate"><span class="pre">signup()</span></code></a></li>
+<li><a class="reference internal" href="#website.auth.verify_reset_token"><code class="docutils literal notranslate"><span class="pre">verify_reset_token()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-tests.test_routes">Test Routes</a><ul>
+<li><a class="reference internal" href="#tests.test_routes.new_user"><code class="docutils literal notranslate"><span class="pre">new_user()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_api_data_no_config"><code class="docutils literal notranslate"><span class="pre">test_api_data_no_config()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_api_data_no_query_id"><code class="docutils literal notranslate"><span class="pre">test_api_data_no_query_id()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_api_data_valid"><code class="docutils literal notranslate"><span class="pre">test_api_data_valid()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_forgot_password_get"><code class="docutils literal notranslate"><span class="pre">test_forgot_password_get()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_forgot_password_post_doesnt_exist"><code class="docutils literal notranslate"><span class="pre">test_forgot_password_post_doesnt_exist()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_forgot_password_post_exists"><code class="docutils literal notranslate"><span class="pre">test_forgot_password_post_exists()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_home_page"><code class="docutils literal notranslate"><span class="pre">test_home_page()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_login"><code class="docutils literal notranslate"><span class="pre">test_login()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_logout"><code class="docutils literal notranslate"><span class="pre">test_logout()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_password_change"><code class="docutils literal notranslate"><span class="pre">test_password_change()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_profile_access"><code class="docutils literal notranslate"><span class="pre">test_profile_access()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_profile_requires_login"><code class="docutils literal notranslate"><span class="pre">test_profile_requires_login()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_reset_password_get_valid_token"><code class="docutils literal notranslate"><span class="pre">test_reset_password_get_valid_token()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_reset_password_invalid_token"><code class="docutils literal notranslate"><span class="pre">test_reset_password_invalid_token()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_reset_password_post_valid_token"><code class="docutils literal notranslate"><span class="pre">test_reset_password_post_valid_token()</span></code></a></li>
+<li><a class="reference internal" href="#tests.test_routes.test_signup"><code class="docutils literal notranslate"><span class="pre">test_signup()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

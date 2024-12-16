@@ -8,7 +8,7 @@ Docker-Flask-Template Documentation
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
 
@@ -16,10 +16,17 @@ Module Documentation
 ====================
 
 
+Run
+---
+
 .. automodule:: run
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+Website Views
+-------------
 
 
 .. automodule:: website.views
@@ -28,7 +35,22 @@ Module Documentation
    :show-inheritance:
 
 
+Auth Views
+----------
+
+
 .. automodule:: website.auth
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+Test Routes
+-----------
+
+
+.. automodule:: tests.test_routes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
