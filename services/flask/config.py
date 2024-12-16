@@ -5,6 +5,7 @@
 Creates configurations for normal operation and for unit tests.
 """
 
+# from distutils.util import strtobool
 import os
 
 
@@ -18,6 +19,15 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Should be False in production
 
     FLASK_ADMIN_SWATCH = os.getenv('FLASK_ADMIN_SWATCH')  # Set the theme for the admin panel.
+
+    # Set options for Flask-Mail
+    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+    MAIL_PORT = int(os.getenv('MAIL_PORT'))
+    MAIL_USE_TLS = True if os.getenv('MAIL_USE_TLS') == 'True' else False
+    MAIL_USE_SSL = True if os.getenv('MAIL_USE_SSL') == 'True' else False
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
 
     # Set debug options, generally related to Flask-DebugToolbar
     if os.getenv("FLASK_DEBUG", "0") == '1':  # Checks FLASK_DEBUG from .env and uses that as the value.

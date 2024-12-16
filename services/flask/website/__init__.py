@@ -44,6 +44,8 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     # Initialize the bootstrap frontend
     bootstrap.init_app(app)
+    # Initialize the Flask-Mail extension for password resets
+    mail.init_app(app)
     # Initialize and set up the Login Manager.
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

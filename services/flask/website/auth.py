@@ -4,10 +4,12 @@
 """
 
 from . import db
+from .extensions import mail
 from .helper_functions import user_permissions
 from .models import User, QueryConfiguration
 from .forms import LoginForm, RegistrationForm, UserProfileForm, ForgotPasswordForm, ResetPasswordForm
 from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, session, url_for
+from flask_mail import Message
 from flask_login import current_user, login_user, login_required, logout_user
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -112,6 +114,13 @@ def forgot_password():
 
             # TODO: Send an email (Replace below with actual sending of email)
             print(f"[DEBUG] Would send email to {user.email} with link: {reset_url}")
+            msg = Message(
+                subject="Password Reset Request",
+                recipients=[user.email],
+                # No need to specify sender if MAIL_DEFAULT_SENDER is configured.
+                body=f"Hello,\n\nClick the link below to reset you password:\n{reset_url}\n\nIf you did not request this, please ignore."
+            )
+            mail.send(msg)
 
         flash('If that email is in our system, you will receive a password reset link.', category='info')
         return redirect(url_for('auth.login'))
@@ -151,6 +160,7 @@ def reset_password(token):
 
     return render_template('reset_password.html', title="Reset Password", form=form, token=token)
 
+
 def generate_reset_token(user_id, expires_sec=1800):
     """
     Generate a token that expires after 30 minutes (1800 seconds)
@@ -183,7 +193,6 @@ def verify_reset_token(token, max_age=1800):
     except:
         return None
     return user_id
-
 
 
 @auth.route('/profile', methods=['GET', 'POST'])
