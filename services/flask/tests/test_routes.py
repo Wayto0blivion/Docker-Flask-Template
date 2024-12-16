@@ -194,7 +194,41 @@ def test_reset_password_invalid_token(client):
     assert b'Your reset link is invalid' in response.data
 
 
+def test_api_data_no_query_id(client):
+    """Query /api/data with no query id. Should return an empty response."""
+    response = client.get('/api/data')
+    assert response.status_code == 400
+    assert b'"items":[]' in response.data
 
+
+def test_api_data_no_config(client):
+    """If query_config doesn't exist for the given query_id"""
+    response = client.get('/api/data?query_id=some-random-uuid')
+    assert response.status_code == 404
+    assert b'"items":[]' in response.data
+
+
+def test_api_data_valid(client, db, new_user):
+    """Create a QueryConfiguration that returns the user, then fetch the query_id from api/data."""
+    from website.models import QueryConfiguration
+    import uuid
+    query_id = str(uuid.uuid4())
+    config = QueryConfiguration(
+        id=query_id,
+        model_name='user',
+        filters={},
+        columns=['id', 'email', 'username'],
+        user_id=new_user.id
+    )
+    db.session.add(config)
+    db.session.commit()
+
+    response = client.get(f'/api/data?query_id={query_id}')
+    assert response.status_code == 200
+    json_data = response.get_json()
+    assert 'items' in json_data
+    assert len(json_data['items']) == 1
+    assert json_data['items'][0]['email'] == 'testuser@example.com'
 
 
 
